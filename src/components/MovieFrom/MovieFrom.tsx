@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
 import { setQuery, fetchSearchResults } from "../../redux/slices/searchSlice";
-import { fetchMovies } from "../../redux/slices/moviesSlice";
-import { setSortField } from "../../redux/slices/sortSlice";
+import { fetchMovies, sortMovies } from "../../redux/slices/moviesSlice";
 import { SortField } from "../../types/movie";
 import { toggleTheme } from "../../redux/slices/themeSlice";
 
@@ -39,8 +38,8 @@ const MovieForm: React.FC = () => {
   };
 
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = (e.target.value || "defalut") as SortField;
-    dispatch(setSortField(value));
+    const value = e.target.value as SortField;
+    dispatch(sortMovies(value));
   };
 
   return (

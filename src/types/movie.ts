@@ -14,6 +14,7 @@ export type AsyncState = {
 
 export type Movies = {
   movies: Movie[];
+  sortedMovies: Movie[];
 };
 
 export type MovieState = { movie: Movie | {} } & AsyncState;

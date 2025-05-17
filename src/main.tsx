@@ -1,6 +1,5 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import App from "./components/App.tsx";
 import store from "./redux/store.ts";
 import { Provider } from "react-redux";
 import "./index.css";
@@ -12,9 +11,7 @@ if (container) {
 
   root.render(
     <Provider store={store}>
-      <StrictMode>
-        <App />
-      </StrictMode>
+      <App />
     </Provider>
   );
 } else {

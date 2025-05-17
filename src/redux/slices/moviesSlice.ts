@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchAllMovies } from "../../api/swapi";
-import { Movie, MoviesState } from "../../types/movie";
+import { Movie, MoviesState, SortField } from "../../types/movie";
 import { fetchSearchResults } from "./searchSlice";
 import { RootState } from "../store";
 
 const initialState: MoviesState = {
   movies: [],
+  sortedMovies: [],
   status: "idle",
   error: null,
 };
@@ -18,7 +19,27 @@ export const fetchMovies = createAsyncThunk<
 const moviesSlice = createSlice({
   name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    sortMovies: (state, action) => {
+      const sortBy: SortField = action.payload;
+
+      let sortedMovies: Movie[] = state.movies;
+
+      if (sortBy === "episode_id") {
+        sortedMovies = state.movies.sort(
+          (a: Movie, b: Movie) => a.episode_id - b.episode_id
+        );
+      }
+
+      if (sortBy === "title" || sortBy === "release_date") {
+        sortedMovies = state.movies.sort((a: Movie, b: Movie) =>
+          a[sortBy].localeCompare(b[sortBy])
+        );
+      }
+
+      state.sortedMovies = sortedMovies;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovies.pending, (state) => {
@@ -30,6 +51,7 @@ const moviesSlice = createSlice({
         (state, action: PayloadAction<Movie[]>) => {
           state.status = "succeeded";
           state.movies = action.payload;
+          state.sortedMovies = action.payload;
           state.error = null;
         }
       )
@@ -53,6 +75,7 @@ const moviesSlice = createSlice({
         (state, action: PayloadAction<Movie[]>) => {
           state.status = "succeeded";
           state.movies = action.payload;
+          state.sortedMovies = action.payload;
           state.error = null;
         }
       )
@@ -64,4 +87,5 @@ const moviesSlice = createSlice({
   },
 });
 
+export const { sortMovies } = moviesSlice.actions;
 export default moviesSlice.reducer;

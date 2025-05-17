@@ -186,3 +186,8 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(24px);
 }
+
+.error {
+  font-size: 50px;
+  text-align: center;
+}

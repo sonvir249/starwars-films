@@ -19,11 +19,8 @@ const sortSlice = createSlice({
         state.ascending = true;
       }
     },
-    setSortOrder(state, action: PayloadAction<boolean>) {
-      state.ascending = action.payload;
-    },
   },
 });
 
-export const { setSortField, setSortOrder } = sortSlice.actions;
+export const { setSortField } = sortSlice.actions;
 export default sortSlice.reducer;
