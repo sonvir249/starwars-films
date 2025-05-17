@@ -4,6 +4,7 @@ import movieReducer from "./slices/movieSlice";
 import searchReducer from "./slices/searchSlice";
 import sortReducer from "./slices/sortSlice";
 import themeReducer from "./slices/themeSlice";
+import omdbMovieReducer from "./slices/omdbMovieSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     search: searchReducer,
     sort: sortReducer,
     theme: themeReducer,
+    omdbMovie: omdbMovieReducer,
   },
 });
 

@@ -14,6 +14,7 @@
 
 * {
   box-sizing: border-box;
+  font-size: 18px;
 }
 
 body {
@@ -190,4 +191,41 @@ input:checked + .slider:before {
 .error {
   font-size: 50px;
   text-align: center;
+}
+
+/* star rating */
+.ratings-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2;
+}
+
+.full-star {
+  color: #f5b301;
+}
+
+.half-star {
+  position: relative;
+}
+
+.half-star-width {
+  color: #f5b301;
+  position: absolute;
+  width: 50%;
+  overflow: hidden;
+}
+.half-star-color {
+  color: #ccc;
+}
+
+.empty-star {
+  color: #ccc;
+}
+
+.full-star,
+.half-star,
+.half-star-width,
+.half-star-color,
+.empty-star {
+  font-size: 1.5rem;
 }

@@ -30,26 +30,12 @@ export interface SortState {
 
 export type ThemeState = "light" | "dark";
 
-export type OmdbMovieSearch = {
-  Title: string;
-  Year: number;
-  imdbID: string;
-  Type: string;
-  Poster: string;
-};
-
-export type OmdbSearchResult = {
-  Search: OmdbMovieSearch[];
-  totalResults: number;
-  Response: string;
-};
-
-export type MovieRatings = {
-  Source: string;
+export type OmdbMovieRatings = {
+  Source: "Internet Movie Database" | "Rotten Tomatoes" | "Metacritic";
   Value: string;
 };
 
-export type OmdbMovie = {
+export type OmdbMovieSearch = {
   Title: string;
   Year: string;
   Rated: string;
@@ -65,7 +51,7 @@ export type OmdbMovie = {
   Country: string;
   Awards: string;
   Poster: string;
-  Ratings: MovieRatings[];
+  Ratings: OmdbMovieRatings[];
   Metascore: string;
   imdbRating: string;
   imdbVotes: string;
@@ -76,4 +62,18 @@ export type OmdbMovie = {
   Production: string;
   Website: string;
   Response: string;
+};
+
+export type OmdbSearchResult = {
+  Search: OmdbMovieSearch | null;
+};
+
+export type OmdbSearchResultState = OmdbSearchResult & {
+  omdbStatus: "idle" | "loading" | "succeeded" | "failed";
+  omdbError: string | null;
+};
+
+export type OmdbSearchParams = {
+  title: string;
+  year: string;
 };

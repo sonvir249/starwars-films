@@ -1,8 +1,10 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
 import { fetchMovies } from "../../redux/slices/moviesSlice";
-import { Movie } from "../../types/movie";
+import { Movie, OmdbMovieRatings } from "../../types/movie";
+import { fetchOmdbMovie } from "../../redux/slices/omdbMovieSlice";
+import Rating from "../Rating/Rating";
 
 const MoviesWrapper: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -10,8 +12,11 @@ const MoviesWrapper: React.FC = () => {
     (state: RootState) => state.movies
   );
   const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
-
+  const [averageRatings, setAverageRatings] = useState<number>(0);
   const { field } = useSelector((state: RootState) => state.sort);
+  const { Search, omdbStatus } = useSelector(
+    (state: RootState) => state.omdbMovie
+  );
 
   useEffect(() => {
     dispatch(fetchMovies());
@@ -22,10 +27,37 @@ const MoviesWrapper: React.FC = () => {
   if (sortedMovies.length === 0)
     return <p className="error">🚨🚨Movie not found... {error}</p>;
 
-  const getMovieDetails = (movieId: number): void => {
+  const ratings = Search?.Ratings ?? [];
+  const totalScore = ratings.reduce((acc: number, cur: OmdbMovieRatings) => {
+    const value = cur.Value;
+
+    if (value.includes("/")) {
+      const [num, denom] = value.split("/").map(Number);
+      if (!isNaN(num) && !isNaN(denom) && denom !== 0) {
+        acc += (num / denom) * 10;
+      }
+    } else if (value.includes("%")) {
+      const percent = parseFloat(value.replace("%", ""));
+      if (!isNaN(percent)) {
+        acc += percent / 10;
+      }
+    }
+    return acc;
+  }, 0);
+
+  const handleMovieDetails = (
+    movieId: number,
+    title: string,
+    year: string
+  ): void => {
     const movie = sortedMovies.filter((movie) => movie.episode_id === movieId);
     if (movie[0]) {
       setMovieDetails(movie[0]);
+      dispatch(fetchOmdbMovie({ title, year }));
+      const imdbRatings = ratings.length
+        ? parseFloat((totalScore / ratings.length).toFixed(1))
+        : 0;
+      setAverageRatings(imdbRatings);
     }
   };
 
@@ -38,7 +70,13 @@ const MoviesWrapper: React.FC = () => {
               <div
                 key={movie.episode_id}
                 className="movie-item"
-                onClick={() => getMovieDetails(movie.episode_id)}
+                onClick={() =>
+                  handleMovieDetails(
+                    movie.episode_id,
+                    movie.title,
+                    movie.release_date
+                  )
+                }
               >
                 <span>{`Episode ${movie.episode_id}`}</span>
                 <span>{`${movie.title}`}</span>
@@ -51,15 +89,24 @@ const MoviesWrapper: React.FC = () => {
         <div className="movie-detail">
           <h3>{movieDetails.title}</h3>
           <div className="movie-content">
-            {/* <img src="poster.jpg" alt="Movie Poster" /> */}
+            {omdbStatus === "loading" ? (
+              <p>Loading poster...</p>
+            ) : (
+              <img src={Search?.Poster} alt={Search?.Title} />
+            )}
             <p>{movieDetails.opening_crawl}</p>
           </div>
           <p>Directed by: {movieDetails.director}</p>
-          <p>Average rating: ⭐️⭐️⭐️⭐️⭐️⭐️⭐️☆☆</p>
+          <Rating averageRating={averageRatings} />
           <div className="ratings">
-            <span>IMDB: 78%</span>
-            <span>Rotten Tomatoes: 79%</span>
-            <span>Metacritic: 68%</span>
+            {Search?.Ratings.length &&
+              Search?.Ratings.map((rating, index) => {
+                return (
+                  <span key={index}>
+                    {rating.Source}: {rating.Value}
+                  </span>
+                );
+              })}
           </div>
         </div>
       ) : (
