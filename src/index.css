@@ -63,12 +63,12 @@ body {
   }
 
   .movies-list {
-    width: 40%;
+    width: 50%;
     border-right: 1px solid #ccc;
   }
 
   .movie-detail {
-    width: 60%;
+    width: 49%;
   }
 }
 
