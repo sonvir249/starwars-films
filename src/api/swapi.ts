@@ -1,9 +1,4 @@
-import {
-  Movie,
-  OmdbMovie,
-  OmdbMovieSearch,
-  OmdbSearchResult,
-} from "../types/movie";
+import { Movie, OmdbMovieSearch, OmdbSearchResult } from "../types/movie";
 
 const OMDB_API_KEY = "b9a5e69d";
 export const API_BASE_URL = "https://swapi.py4e.com/api/films";
@@ -33,7 +28,9 @@ export const searchMovie = async (query: string): Promise<Movie> => {
   return data.results;
 };
 
-export const getOmdbMovie = async (movieId: string): Promise<OmdbMovie> => {
+export const getOmdbMovie = async (
+  movieId: string
+): Promise<OmdbMovieSearch> => {
   const res = await fetch(`${OMDB_API_URL}&i=${movieId}`);
   if (!res.ok) throw new Error("Failed to fetch omdb movie");
   const data = await res.json();
@@ -43,10 +40,10 @@ export const getOmdbMovie = async (movieId: string): Promise<OmdbMovie> => {
 export const omdbSearchMovie = async (
   title: string,
   year: string
-): Promise<OmdbMovie> => {
+): Promise<OmdbMovieSearch> => {
   const movieYear = new Date(year).getFullYear();
   const res = await fetch(`${OMDB_API_URL}&s=${title}&y=${movieYear}`);
   if (!res.ok) throw new Error("Failed to search omdb movie");
   const data: OmdbSearchResult = await res.json();
-  return getOmdbMovie(data.Search[0].imdbID);
+  return getOmdbMovie(data?.Search[0]?.imdbID);
 };
