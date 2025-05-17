@@ -7,7 +7,7 @@ export type Movie = {
   producer: string;
 };
 
-type AsyncState = {
+export type AsyncState = {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 };
@@ -19,3 +19,12 @@ export type Movies = {
 export type MovieState = { movie: Movie | {} } & AsyncState;
 
 export type MoviesState = Movies & AsyncState;
+
+export type SortField = "defalut" | "episode_id" | "release_date" | "title";
+
+export interface SortState {
+  field: SortField;
+  ascending: boolean;
+}
+
+export type ThemeState = "light" | "dark";
