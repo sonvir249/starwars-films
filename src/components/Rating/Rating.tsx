@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 type RatingProps = {
   averageRating: number;
 };
 
 const Rating: React.FC<RatingProps> = ({ averageRating }: RatingProps) => {
-  const outOf = 10;
-  const starCount = 5;
-  const normalized = (averageRating / outOf) * starCount;
-  const fullStars = Math.floor(normalized);
-  const hasHalfStar = normalized - fullStars >= 0.5;
-  const emptyStars = starCount - fullStars - (hasHalfStar ? 1 : 0);
+  // Memoize calculated star counts
+  const { fullStars, hasHalfStar, emptyStars } = useMemo(() => {
+    const outOf = 10;
+    const starCount = 5;
+    const normalized = (averageRating / outOf) * starCount;
+
+    const full = Math.floor(normalized);
+    const half = normalized - full >= 0.5;
+    const empty = starCount - full - (half ? 1 : 0);
+
+    return {
+      fullStars: full,
+      hasHalfStar: half,
+      emptyStars: empty,
+    };
+  }, [averageRating]);
 
   return (
     <span className="ratings-wrapper">
