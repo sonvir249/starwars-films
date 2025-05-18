@@ -1,4 +1,4 @@
-import { Movie, OmdbMovieSearch, OmdbSearchResult } from "../types/movie";
+import { Movie, OmdbMovieSearch } from "../types/movie";
 
 const OMDB_API_KEY = "b9a5e69d";
 export const API_BASE_URL = "https://swapi.py4e.com/api/films";
@@ -20,7 +20,7 @@ export const fetchSingleMovie = async (id: number): Promise<Movie> => {
   return data.results;
 };
 
-export const searchMovie = async (query: string): Promise<Movie> => {
+export const searchMovie = async (query: string): Promise<Movie[]> => {
   const res = await fetch(`${API_BASE_URL}/?search=${query}`);
   if (!res.ok) throw new Error("Failed to search movie");
   const data = await res.json();

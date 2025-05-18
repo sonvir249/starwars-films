@@ -55,7 +55,7 @@ const moviesSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(fetchMovies.rejected, (state, action) => {
+      .addCase(fetchMovies.rejected, (state) => {
         state.status = "failed";
         state.movies = [];
         state.error = "An unknown error occurred";
