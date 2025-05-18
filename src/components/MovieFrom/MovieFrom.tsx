@@ -66,6 +66,7 @@ const MovieForm: React.FC = () => {
           onChange={() => dispatch(toggleTheme())}
         />
         <span className="slider"></span>
+        <span className="tooltip-text">Toggle Dark/Light Mode</span>
       </label>
     </div>
   );
