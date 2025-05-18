@@ -55,14 +55,11 @@ const moviesSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(
-        fetchMovies.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
-          state.status = "failed";
-          state.error = action.payload || "An unknown error occurred";
-          state.movies = [];
-        }
-      );
+      .addCase(fetchMovies.rejected, (state, action) => {
+        state.status = "failed";
+        state.movies = [];
+        state.error = "An unknown error occurred";
+      });
 
     // Handle search results using fetchSearchResults
     builder

@@ -22,7 +22,7 @@ const MoviesWrapper: React.FC = () => {
     dispatch(fetchMovies());
   }, [field]);
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading") return <p className="loading">Loading...</p>;
   if (status === "failed") return <p className="error">🚨🚨Error: {error}</p>;
   if (sortedMovies.length === 0)
     return <p className="error">🚨🚨Movie not found... {error}</p>;
@@ -96,7 +96,9 @@ const MoviesWrapper: React.FC = () => {
             )}
             <p>{movieDetails.opening_crawl}</p>
           </div>
-          <p>Directed by: {movieDetails.director}</p>
+          <div className="movie-director">
+            Directed by: {movieDetails.director}
+          </div>
           <Rating averageRating={averageRatings} />
           <div className="ratings">
             {Search?.Ratings.length &&
@@ -110,7 +112,9 @@ const MoviesWrapper: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="movie-detail">Select a movie to see details</div>
+        <div className="movie-detail">
+          <p className="details-message">Select a movie to see details</p>
+        </div>
       )}
     </div>
   );

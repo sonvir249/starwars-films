@@ -1,5 +1,6 @@
 :root {
   --bg-color: #ffffff;
+  --form-bg-color: #f2f1f1;
   --text-color: #000000;
   --border-color: #dddddd;
   --hover-bg: #e7e7e7;
@@ -7,6 +8,7 @@
 
 [data-theme="dark"] {
   --bg-color: #1e1e1e;
+  --form-bg-color: #2f2f2f;
   --text-color: #f5f5f5;
   --border-color: #444;
   --hover-bg: #727272;
@@ -32,6 +34,7 @@ body {
   padding: 10px;
   padding: 12px 20px;
   border-bottom: 1px solid #e5e7eb;
+  background-color: var(--form-bg-color);
 }
 
 .form {
@@ -74,6 +77,10 @@ body {
   border-bottom: 1px solid #f3f4f6; /* Very light separator */
   cursor: pointer;
   transition: background-color 0.2s ease;
+}
+
+.details-message {
+  text-align: center;
 }
 
 @media (min-width: 768px) {
@@ -124,6 +131,10 @@ body {
   content: "";
   display: table;
   clear: both;
+}
+
+.movie-director {
+  padding: 10px 0;
 }
 
 .ratings span {
@@ -211,11 +222,16 @@ input:checked + .slider:before {
   text-align: center;
 }
 
+.loading {
+  text-align: center;
+}
+
 /* star rating */
 .ratings-wrapper {
   display: flex;
   align-items: center;
   gap: 2;
+  padding: 10px 0;
 }
 
 .full-star {

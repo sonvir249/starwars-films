@@ -56,7 +56,7 @@ const MovieForm: React.FC = () => {
         type="text"
         placeholder="Type to filter by title...."
       />
-      {loading && <p>Loading...</p>}
+      {loading && <p className="loading">Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <label className="theme-switch">

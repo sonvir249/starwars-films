@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { omdbSearchMovie } from "../../api/swapi";
-import useState from "react";
+
 import {
   OmdbMovieSearch,
   OmdbSearchParams,

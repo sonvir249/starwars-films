@@ -43,7 +43,9 @@ export const omdbSearchMovie = async (
 ): Promise<OmdbMovieSearch> => {
   const movieYear = new Date(year).getFullYear();
   const res = await fetch(`${OMDB_API_URL}&s=${title}&y=${movieYear}`);
-  if (!res.ok) throw new Error("Failed to search omdb movie");
-  const data: OmdbSearchResult = await res.json();
+  if (!res.ok) throw new Error("Failed to search omdb movie.");
+  const data = await res.json();
+  if (!data.Search[0]) throw new Error("Failed to search omdb movie.");
+
   return getOmdbMovie(data?.Search[0]?.imdbID);
 };
