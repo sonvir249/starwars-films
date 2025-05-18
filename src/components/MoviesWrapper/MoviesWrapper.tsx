@@ -99,7 +99,15 @@ const MoviesWrapper: React.FC = () => {
           <div className="movie-director">
             Directed by: {movieDetails.director}
           </div>
-          <Rating averageRating={averageRatings} />
+          <div className="genre-wrapper">
+            {Search?.Genre &&
+              Search?.Genre.split(",").map((genre: string, index) => (
+                <span className="genre" key={index}>
+                  {genre}
+                </span>
+              ))}
+          </div>
+          {Search?.Ratings && <Rating averageRating={averageRatings} />}
           <div className="ratings">
             {Search?.Ratings.length &&
               Search?.Ratings.map((rating, index) => {
@@ -109,6 +117,15 @@ const MoviesWrapper: React.FC = () => {
                   </span>
                 );
               })}
+          </div>
+          <div className="imdb-info">
+            View it on IMDB -{" "}
+            <a
+              href={`https://www.imdb.com/title/${Search?.imdbID}`}
+              target="tab"
+            >
+              {Search?.Title}
+            </a>
           </div>
         </div>
       ) : (

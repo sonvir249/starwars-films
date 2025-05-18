@@ -137,13 +137,19 @@ body {
   padding: 10px 0;
 }
 
+.ratings {
+  padding: 10px 0;
+}
+
 .ratings span {
   display: inline-block;
   margin-right: 10px;
-  font-size: 12px;
-  background: #f0f0f0;
   padding: 4px 8px;
   border-radius: 4px;
+  font-size: 16px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
 }
 
 button,
@@ -154,12 +160,6 @@ input {
   border: 1px solid var(--border-color);
   padding: 6px 10px;
   font-size: 14px;
-}
-
-.ratings span {
-  background: var(--bg-color);
-  color: var(--text-color);
-  border: 1px solid var(--text-color);
 }
 
 .movies-wrapper {
@@ -262,4 +262,21 @@ input:checked + .slider:before {
 .half-star-color,
 .empty-star {
   font-size: 1.5rem;
+}
+
+/* genre section */
+.genre-wrapper,
+.imdb-info {
+  padding: 10px 0;
+}
+
+.genre {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+  display: inline-block;
+  margin-right: 10px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 16px;
 }
